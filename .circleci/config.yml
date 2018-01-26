@@ -58,9 +58,8 @@ jobs:
      build-deploy:
       jobs:
       - build-job
-      - deploy-job:
-       requires:
-        -build-job
+      - deploy-job
+       
         
 
 
