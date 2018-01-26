@@ -47,7 +47,7 @@ jobs:
       - run: ls -alt
       - run: ls -alt ./build/libs
       
-     deploy-job:
+   deploy-job:
      steps:
       - run: 
         name: Copying to S3
