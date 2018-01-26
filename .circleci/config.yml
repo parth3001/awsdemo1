@@ -47,6 +47,7 @@ jobs:
       - run: gradle build
       - run: ls -alt
       - run: ls -alt ./build/libs
+      - run: aws -version
       - run: 
           name: s3
           command: aws s3 sync ./build/libs/*.war s3://varadbookit/artifact
