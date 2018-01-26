@@ -9,6 +9,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
+      - image: awscli
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -48,7 +49,7 @@ jobs:
       - run: ls -alt
       - run: ls -alt ./build/libs
       #- run: aws -version
-      #- run: pip install awscli --upgrade --user
+      - run: pip install awscli --upgrade --user
       #- run: which aws
       # install python and awscli
       - run:
