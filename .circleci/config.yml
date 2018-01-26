@@ -47,7 +47,7 @@ jobs:
       - run: gradle build
       - run: ls -alt
       - run: ls -alt ./build/libs
-      - run: aws -version
+      #- run: aws -version
       - run: which aws
       - run: 
           name: s3
