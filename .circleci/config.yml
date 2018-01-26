@@ -33,6 +33,7 @@ jobs:
           
 
       - run: gradle dependencies
+      - run: ls -alt
 
       - save_cache:
           paths:
