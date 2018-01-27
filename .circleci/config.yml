@@ -62,7 +62,7 @@ jobs:
       #      python3.4 get-pip.py --user
       #      pip install awscli --upgrade --user
             
-        - run:
+       - run:
           name: Install AWSCLI
           command: |
             sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
