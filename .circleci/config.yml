@@ -68,6 +68,14 @@ jobs:
       - run: 
           name: s3
           command: aws s3 cp ./build/libs/repo-0.0.1-SNAPSHOT.war s3://varadbookit/
+          
+      - store_artifacts:
+          run: pwd
+          run: ls -alt ./build/libs
+          path: ./build/libs/repo-0.0.1-SNAPSHOT.war
+          destination: artifact-file
+          ls
+          - run: aws s3 cp artifact-file.zip s3://varadbookit/
  
       
    
