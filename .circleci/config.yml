@@ -52,7 +52,7 @@ jobs:
       #- run: pip install awscli --upgrade --user
       #- run: which aws
       # install python and awscli
-      # - run: sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+      - run: sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
       # - run: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
       # - run: sudo pip install -q awscli --upgrade
       # - run: aws --version
