@@ -48,6 +48,11 @@ jobs:
       - run: gradle build
       - run: ls -alt
       - run: ls -alt ./build/libs
+      - store_artifacts:
+          run: pwd
+          run: ls -alt ./build/libs
+          path: ./build/libs/repo-0.0.1-SNAPSHOT.war
+          destination: artifact-file
       #- run: aws -version
       #- run: pip install awscli --upgrade --user
       #- run: which aws
@@ -61,7 +66,7 @@ jobs:
       - run: ls -alt ./build/libs
       - run: 
           name: s3
-          command: aws s3 sync ./build/libs/repo-0.0.1-SNAPSHOT.war s3://varadbookit/artifact
+          command: aws s3 sync artifact-file s3://varadbookit/artifact
  
       
    
