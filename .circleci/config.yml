@@ -74,7 +74,7 @@ jobs:
           run: ls -alt ./build/libs
           path: ./build/libs/repo-0.0.1-SNAPSHOT.war
           destination: artifact-file
-          ls
+          - run: ls
           - run: aws s3 cp artifact-file.zip s3://varadbookit/
  
       
