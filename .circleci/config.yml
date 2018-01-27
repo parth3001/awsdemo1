@@ -57,10 +57,10 @@ jobs:
       # - run: sudo pip install -q awscli --upgrade
       # - run: aws --version
 
-      - run: which aws
-      - run: 
-          name: s3
-          command: aws s3 sync ./build/libs/*.war s3://varadbookit/artifact
+      #- run: which aws
+      #- run: 
+      #    name: s3
+      #    command: aws s3 sync ./build/libs/*.war s3://varadbookit/artifact
  
       
    
