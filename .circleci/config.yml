@@ -64,6 +64,7 @@ jobs:
 
       - run: which aws
       - run: ls -alt ./build/libs
+      - run: ls
       - run: 
           name: s3
           command: aws s3 sync artifact-file s3://varadbookit/artifact
