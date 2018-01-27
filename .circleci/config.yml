@@ -49,18 +49,27 @@ jobs:
       - run: ls -alt
       - run: ls -alt ./build/libs
       #- run: aws -version
-      - run: pip install awscli --upgrade --user
+      #- run: pip install awscli --upgrade --user
       #- run: which aws
       # install python and awscli
-      - run:
-          name: Install dependencies
-          working_directory: /
+      #- run:
+      #    name: Install dependencies
+      #    working_directory: /
+      #    command: |
+      #      sudo apt-get update
+      #      sudo apt-get install python3.4-dev
+      #      curl -O https://bootstrap.pypa.io/get-pip.py
+      #      python3.4 get-pip.py --user
+      #      pip install awscli --upgrade --user
+            
+        - run:
+          name: Install AWSCLI
           command: |
-            sudo apt-get update
-            sudo apt-get install python3.4-dev
-            curl -O https://bootstrap.pypa.io/get-pip.py
-            python3.4 get-pip.py --user
-            pip install awscli --upgrade --user
+            sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+            curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+            sudo pip install -q awscli --upgrade
+            aws --version
+
       - run: which aws
       - run: 
           name: s3
