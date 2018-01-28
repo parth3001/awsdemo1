@@ -67,7 +67,7 @@ jobs:
       - run: ls
       - run: 
           name: s3
-          command: aws s3 artifact-file s3://varadbookit/
+          command: aws s3 cp artifact-file s3://varadbookit/
           
       
    
