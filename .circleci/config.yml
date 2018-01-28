@@ -61,13 +61,14 @@ jobs:
       - run: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
       - run: sudo pip install -q awscli --upgrade
       - run: aws --version
+      - run: cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war.zip
 
       - run: which aws
       - run: ls -alt ./build/libs
       - run: ls
       - run: 
           name: s3
-          command: aws s3 cp artifact-file s3://varadbookit/
+          command: aws s3 cp ./build/libs/repo-0.0.1-SNAPSHOT.war.zip s3://varadbookit/
           
       
    
