@@ -70,6 +70,6 @@ jobs:
           command: aws s3 cp ./build/libs/repo-0.0.1-SNAPSHOT.war.zip s3://varadbookit/
           
       #- run: aws lambda update-function-code --function-name Hello --s3-bucket s3.us-east-2.amazonaws.com/varadbookit --s3-key Hello.zip    
-      - run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:657766436554:function:Hello --s3-bucket s3://varadbookit/ --region us-east-2 --s3-key Hello.zip  
+      - run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:657766436554:function:Hello --region us-east-2 --s3-bucket s3://varadbookit/ --s3-key Hello.zip  
       
       
