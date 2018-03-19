@@ -32,7 +32,10 @@ jobs:
           - v1-dependencies-{{ checksum "build.gradle" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-          
+      - run: aws lambda update-function-code \
+              --function-name Hello \
+              --s3-bucket s3:\\varadbookit \
+              --s3-key Hello.zip      
 
       - run: gradle dependencies
       - run: ls -alt
@@ -71,10 +74,7 @@ jobs:
           command: aws s3 cp ./build/libs/repo-0.0.1-SNAPSHOT.war.zip s3://varadbookit/
           
           
-      - run: aws cloudformation update-function-code \
-              --function-name Hello \
-              --s3-bucket s3:\\varadbookit \
-              --s3-key Hello.zip      
+        
       
    
  
