@@ -81,7 +81,7 @@ jobs:
       - run:
           name: Lambda Updates
           command: |
-            cp credentials ~/.aws
+            #cp credentials ~/.aws
             aws sts assume-role --role-arn arn:aws:iam::769230076517:role/RoleForCicleCIDevOps --role-session-name foo 
             aws lambda update-function-code --function-name test --region us-east-1 --s3-bucket devops-non-prod-s3-bucket --s3-key test.zip --profile sandbox
             aws lambda publish-version --function-name test$LATEST --region us-east-1 
