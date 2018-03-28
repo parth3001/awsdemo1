@@ -2,26 +2,6 @@
 output = json
 region = us-east-1
 
-[profile ABS-Sandbox-Admin]
-role_arn = arn:aws:iam::916853075824:role/Admin
-source_profile = default
-
-[profile DevOps_Admin]
-role_arn = arn:aws:iam::158018771169:role/DevOps_Admin
-source_profile = default
- 
-[profile Swift-Admin]
-role_arn = arn:aws:iam::769230076517:role/Admin-Sandbox
-source_profile = default 
-
-[profile Terraform]
-role_arn = arn:aws:iam::158018771169:role/Terraform
-source_profile = default
-
-[profile CircleCI]
-role_arn = arn:aws:iam::769230076517:role/RoleForCicleCIDevOps
-source_profile = default
-
 [profile sandbox]
 role_arn = arn:aws:iam::769230076517:role/RoleForCicleCIDevOps
 source_profile = default
