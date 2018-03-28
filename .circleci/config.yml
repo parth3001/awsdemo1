@@ -35,6 +35,12 @@ jobs:
       
       - run: gradle dependencies
       - run: ls -alt
+ # Lambda Updates
+      - run:
+          name: Env Variables
+          command: |
+            echo $AWS_ACCESS_KEY_ID_SANDBOX
+
 
       - save_cache:
           paths:
