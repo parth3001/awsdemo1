@@ -88,8 +88,8 @@ jobs:
           name: Lambda Updates
           command: |
             mkdir ~/.aws
-            cp credentials ~/.aws
-            #cp config ~/.aws
+            #cp credentials ~/.aws
+            cp config ~/.aws
             echo $AWS_ACCESS_KEY_ID_SANDBOX
             #aws configure --profile default
             export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_SANDBOX
