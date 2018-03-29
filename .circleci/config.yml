@@ -5,7 +5,8 @@
      
 version: 2
 jobs:
-  build:
+  "sandbox-deploy":
+  #build:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
@@ -107,5 +108,10 @@ jobs:
             aws lambda publish-version --function-name test$LATEST --region us-east-1 --profile default
             aws lambda update-alias --function-name test --name testalias --function-version 3 --profile default
             
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "sandbox-deploy"            
       
       
