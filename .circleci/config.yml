@@ -118,7 +118,7 @@ workflows:
   build:
     jobs:
      - "sandbox-build"
-     - "sandbox-deploy" 
+     - "sandbox-deploy": 
       requires:
             - "sandbox-build"
       
