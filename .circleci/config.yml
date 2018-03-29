@@ -86,6 +86,7 @@ jobs:
       
       # Lambda Updates
   "sandbox-deploy":
+    steps:  
       - run:
           name: Lambda Updates
           command: |
