@@ -120,8 +120,8 @@ workflows:
      - sandbox-build
      - sandbox-deploy: 
          requires:
-            - hold  
-     - hold:
+            - hold1  
+     - hold1:
           type: approval
           requires:
             - sandbox-build
