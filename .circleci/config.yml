@@ -92,10 +92,10 @@ jobs:
             cp config ~/.aws
             echo $AWS_ACCESS_KEY_ID_SANDBOX
             #aws configure --profile default
-            export aws_profile=sandbox
             export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_SANDBOX
             export aws_secret_access_key=$AWS_SECRET_KEY_SANDBOX
             export aws_region=us-east-1
+            export aws_profile=sandbox
             export aws_role_arn=arn:aws:iam::769230076517:role/RoleForCicleCIDevOps
             echo $aws_access_key_id
             echo $aws_secret_access_key
