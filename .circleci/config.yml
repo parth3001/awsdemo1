@@ -5,7 +5,7 @@
      
 version: 2
 jobs:
-  "sandbox-deploy":
+  "sandbox-build":
   #build:
     docker:
       # specify the version you desire here
@@ -85,6 +85,7 @@ jobs:
       #- run: aws lambda publish-version --function-name arn:aws:lambda:us-east-1:769230076517:function:test$LATEST --region us-east-1 
       
       # Lambda Updates
+  "sandbox-deploy":
       - run:
           name: Lambda Updates
           command: |
@@ -112,6 +113,7 @@ workflows:
   version: 2
   build:
     jobs:
+      - "sandbox-build"
       - "sandbox-deploy"            
       
       
