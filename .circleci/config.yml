@@ -9,7 +9,8 @@ jobs:
   #build:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      #- image: circleci/openjdk:8-jdk
+       - image: arn:aws:ecr:us-east-1:916853075824:repository/java/oracle/serverjre 
       #- image: docker-aws-cli
       
       # Specify service dependencies here if necessary
