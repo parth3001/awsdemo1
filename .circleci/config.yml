@@ -5,8 +5,8 @@
      
 version: 2
 jobs:
-  "sandbox-build":
-  #build:
+  #"sandbox-build":
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
@@ -87,11 +87,6 @@ jobs:
       #- run: aws lambda publish-version --function-name arn:aws:lambda:us-east-1:769230076517:function:test$LATEST --region us-east-1 
       
       # Lambda Updates
-  "sandbox-deploy":
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-    steps:  
       - run:
           name: Lambda Updates
           command: |
@@ -115,16 +110,3 @@ jobs:
             aws lambda publish-version --function-name test$LATEST --region us-east-1 --profile default
             aws lambda update-alias --function-name test --name testalias --function-version 3 --profile default
             
-workflows:
-  version: 2
-  build:
-    jobs:
-     - sandbox-build
-     - sandbox-deploy: 
-         requires:
-            - hold1  
-     - hold1:
-          type: approval
-          requires:
-            - sandbox-build
-      
