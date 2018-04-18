@@ -1,0 +1,14 @@
+{
+ 	"version": 0.0,
+ 	"Resources": [{
+ 		"test": {
+ 			"Type": "AWS::Lambda::Function",
+ 			"Properties": {
+ 				"Name": "test",
+ 				"Alias": "testalias",
+ 				"CurrentVersion": "old",
+ 				"TargetVersion": "new"
+ 			}
+ 		}
+ 	}]
+}
