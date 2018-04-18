@@ -111,7 +111,7 @@ jobs:
             #aws lambda update-alias --function-name test --name testalias --function-version 3 --profile default
             aws lambda get-alias --function-name test --name testalias --region us-east-1 --profile default > current_version.json
             jq -r '.Version' publish_version.json > new_version.json
-            echo \{\"version\": 0.0,\"Resources\": [\{\"myLambdaFunction\": \{\"Type\": \"AWS::Lambda::Function\","Properties\": \{\"Name\": \"myLambdaFunction\",\"Alias\": \"myLambdaFunctionAlias\",\"CurrentVersion\": \"old\",\"TargetVersion\": \"new\"\}\}\}]\} > lambda.json
+            echo [\{\"version\": 0.0,\"Resources\": [\{\"myLambdaFunction\": \{\"Type\": \"AWS::Lambda::Function\","Properties\": \{\"Name\": \"myLambdaFunction\",\"Alias\": \"myLambdaFunctionAlias\",\"CurrentVersion\": \"old\",\"TargetVersion\": \"new\"\}\}\}]\}] > lambda.json
             sed -i 's/new/'$(cat new_version.json)'/g' lambda.json
             jq -r '.FunctionVersion' current_version.json > new_current_version.json
             sed -i 's/old/'$(cat new_current_version.json)'/g' lambda.json
