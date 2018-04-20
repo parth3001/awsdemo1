@@ -116,13 +116,14 @@ jobs:
             jq -r '.FunctionVersion' current_version.json > new_current_version.json
             sed -i 's/old/'$(cat new_current_version.json)'/g' lambda.json
             echo $(cat lambda.json)
+            date > date
             aws deploy list-applications --region us-east-1 --profile default
             aws deploy list-deployment-groups --application-name test --profile default
             aws deploy get-application --application-name test --region us-east-1 --profile default
             # upload build artefact to S3
             aws s3 cp lambda.json s3://devops-non-prod-s3-bucket/
             echo "Creating Deployment"
-            aws deploy create-deployment --application-name test --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name dev --s3-location bucket=devops-non-prod-s3-bucket,bundleType=JSON,key=lambda.json --description "Deployed via CircleCI on 'echo $(cat date)'" --region us-east-1 --profile default > deploy.json                                                                                                                                                       
+            aws deploy create-deployment --application-name test --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name dev --s3-location bucket=devops-non-prod-s3-bucket,bundleType=JSON,key=lambda.json --description "Deployed via CircleCI on $(cat date)" --region us-east-1 --profile default > deploy.json                                                                                                                                                       
             jq -r '.deploymentId' deploy.json > newdeploy.json
             sed -i '/^null/d' newdeploy.json
             
