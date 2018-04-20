@@ -116,5 +116,6 @@ jobs:
             jq -r '.FunctionVersion' current_version.json > new_current_version.json
             sed -i 's/old/'$(cat new_current_version.json)'/g' lambda.json
             echo $(cat lambda.json)
+            aws deploy list-applications --region us-east-1 
             aws deploy get-application --application-name test --region us-east-1
             
