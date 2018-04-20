@@ -122,7 +122,7 @@ jobs:
             # upload build artefact to S3
             aws s3 cp lambda.json s3://devops-non-prod-s3-bucket/
             echo "Creating Deployment"
-            aws deploy create-deployment --application-name test --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name dev --s3-location bucket=devops-non-prod-s3-bucket,bundleType=JSON,key=lambda.json --description "Deployed via CircleCI on $(cat date)" --region us-east-1 --profile default > deploy.json                                                                                                                                                       
+            aws deploy create-deployment --application-name test --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name dev --s3-location bucket=devops-non-prod-s3-bucket,bundleType=JSON,key=lambda.json --description "Deployed via CircleCI on 'echo $(cat date)'" --region us-east-1 --profile default > deploy.json                                                                                                                                                       
             jq -r '.deploymentId' deploy.json > newdeploy.json
             sed -i '/^null/d' newdeploy.json
             
