@@ -77,7 +77,7 @@ jobs:
       - run: ls -alt ./build/libs
       
       - store_artifacts:
-          path: ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
+          path: ./build/libs/repo-0.0.1-SNAPSHOT.war
           destination: artifact-file
       
       #- run: which aws
