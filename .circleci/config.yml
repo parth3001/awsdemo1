@@ -75,7 +75,7 @@ jobs:
                curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
                sudo pip install -q awscli --upgrade
                aws --version
-               cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war.zip
+               cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
 
       - run: which aws
       - run: ls -alt ./build/libs
