@@ -51,11 +51,14 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
         
       # run tests!
-      - run: gradle clean
+       - run: 
+          name: Gradle Tests and Build
+          command: |
+               gradle clean
       #- run: gradle test
-      - run: gradle build
-      - run: ls -alt
-      - run: ls -alt ./build/libs
+               gradle build
+               ls -alt
+               ls -alt ./build/libs
       - store_artifacts:
           run: pwd
           run: ls -alt ./build/libs
@@ -65,11 +68,14 @@ jobs:
       #- run: pip install awscli --upgrade --user
       #- run: which aws
       # install python and awscli
-      - run: sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
-      - run: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
-      - run: sudo pip install -q awscli --upgrade
-      - run: aws --version
-      - run: cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war.zip
+      - run: 
+          name: Install AWS CLI
+          command: |
+               sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+               curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+               sudo pip install -q awscli --upgrade
+               aws --version
+               cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war.zip
 
       - run: which aws
       - run: ls -alt ./build/libs
@@ -87,47 +93,47 @@ jobs:
       #- run: aws lambda publish-version --function-name arn:aws:lambda:us-east-1:769230076517:function:test$LATEST --region us-east-1 
       
       # Lambda Updates
-      - run:
-          name: Lambda Updates
-          command: |
-            mkdir ~/.aws
-            cp credentials ~/.aws
-            #cp config ~/.aws
-            echo $AWS_ACCESS_KEY_ID_SANDBOX
-            #aws configure --profile default
-            export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_SANDBOX
-            export aws_secret_access_key=$AWS_SECRET_KEY_SANDBOX
-            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID_SANDBOX
-            aws configure set aws_secret_access_key $AWS_SECRET_KEY_SANDBOX
-            export aws_region=us-east-1
-            export aws_profile=sandbox
-            export aws_role_arn=arn:aws:iam::769230076517:role/RoleForCicleCIDevOps
-            echo $aws_access_key_id
-            echo $aws_secret_access_key
-            aws configure list
-            #aws sts assume-role --role-arn arn:aws:iam::769230076517:role/RoleForCicleCIDevOps --role-session-name foo 
-            aws lambda update-function-code --function-name test --region us-east-1 --s3-bucket devops-non-prod-s3-bucket --s3-key test.zip --profile default
-            aws lambda publish-version --function-name test$LATEST --region us-east-1 --profile default > publish_version.json
-            #aws lambda update-alias --function-name test --name testalias --function-version 3 --profile default
-            aws lambda get-alias --function-name test --name testalias --region us-east-1 --profile default > current_version.json
-            jq -r '.Version' publish_version.json > new_version.json
-            #echo [\{\"version\": 0.0,\"Resources\": [\{\"myLambdaFunction\": \{\"Type\": \"AWS::Lambda::Function\",\"Properties\": \{\"Name\": \"myLambdaFunction\",\"Alias\": \"myLambdaFunctionAlias\",\"CurrentVersion\": \"old\",\"TargetVersion\": \"new\"\}\}\}]\}] > lambda.json
-            sed -i 's/new/'$(cat new_version.json)'/g' lambda.json
-            jq -r '.FunctionVersion' current_version.json > new_current_version.json
-            sed -i 's/old/'$(cat new_current_version.json)'/g' lambda.json
-            echo $(cat lambda.json)
-            date > date
-            aws deploy list-applications --region us-east-1 --profile default
-            aws deploy list-deployment-groups --application-name test --profile default
-            aws deploy get-application --application-name test --region us-east-1 --profile default
-            # upload build artefact to S3
-            aws s3 cp lambda.json s3://devops-non-prod-s3-bucket/
-            echo "Creating Deployment"
-            aws deploy create-deployment --application-name test --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name dev --s3-location bucket=devops-non-prod-s3-bucket,bundleType=JSON,key=lambda.json --description "Deployed via CircleCI on $(cat date)" --region us-east-1 --profile default > deploy.json                                                                                                                                                       
-            jq -r '.deploymentId' deploy.json > newdeploy.json
-            sed -i '/^null/d' newdeploy.json
+      #- run:
+      #    name: Lambda Updates
+      #    command: |
+      #      mkdir ~/.aws
+      #      cp credentials ~/.aws
+      #      #cp config ~/.aws
+      #      echo $AWS_ACCESS_KEY_ID_SANDBOX
+      #      #aws configure --profile default
+      #      export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_SANDBOX
+      #      export aws_secret_access_key=$AWS_SECRET_KEY_SANDBOX
+      #      aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID_SANDBOX
+      #      aws configure set aws_secret_access_key $AWS_SECRET_KEY_SANDBOX
+      #      export aws_region=us-east-1
+      #      export aws_profile=sandbox
+      #      export aws_role_arn=arn:aws:iam::769230076517:role/RoleForCicleCIDevOps
+      #      echo $aws_access_key_id
+      #      echo $aws_secret_access_key
+      #      aws configure list
+      #      #aws sts assume-role --role-arn arn:aws:iam::769230076517:role/RoleForCicleCIDevOps --role-session-name foo 
+      #      aws lambda update-function-code --function-name test --region us-east-1 --s3-bucket devops-non-prod-s3-bucket --s3-key test.zip --profile default
+      #      aws lambda publish-version --function-name test$LATEST --region us-east-1 --profile default > publish_version.json
+      #      #aws lambda update-alias --function-name test --name testalias --function-version 3 --profile default
+      #      aws lambda get-alias --function-name test --name testalias --region us-east-1 --profile default > current_version.json
+      #      jq -r '.Version' publish_version.json > new_version.json
+      #      #echo [\{\"version\": 0.0,\"Resources\": [\{\"myLambdaFunction\": \{\"Type\": \"AWS::Lambda::Function\",\"Properties\": \{\"Name\": \"myLambdaFunction\",\"Alias\": \"myLambdaFunctionAlias\",\"CurrentVersion\": \"old\",\"TargetVersion\": \"new\"\}\}\}]\}] > lambda.json
+      #      sed -i 's/new/'$(cat new_version.json)'/g' lambda.json
+      #      jq -r '.FunctionVersion' current_version.json > new_current_version.json
+      #      sed -i 's/old/'$(cat new_current_version.json)'/g' lambda.json
+      #      echo $(cat lambda.json)
+      #      date > date
+      #      aws deploy list-applications --region us-east-1 --profile default
+      #      aws deploy list-deployment-groups --application-name test --profile default
+      #      aws deploy get-application --application-name test --region us-east-1 --profile default
+      #      # upload build artefact to S3
+      #      aws s3 cp lambda.json s3://devops-non-prod-s3-bucket/
+      #      echo "Creating Deployment"
+      #      aws deploy create-deployment --application-name test --deployment-config-name CodeDeployDefault.LambdaAllAtOnce --deployment-group-name dev --s3-location bucket=devops-non-prod-s3-bucket,bundleType=JSON,key=lambda.json --description "Deployed via CircleCI on $(cat date)" --region us-east-1 --profile default > deploy.json                                                                                                                                                       
+      #      jq -r '.deploymentId' deploy.json > newdeploy.json
+      #      sed -i '/^null/d' newdeploy.json
             
-      - run:
-          name: Deployment Status
-          command: |
-            aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default
+      #- run:
+      #    name: Deployment Status
+      #    command: |
+      #      aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default
