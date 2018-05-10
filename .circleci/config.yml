@@ -73,9 +73,10 @@ jobs:
                aws --version
                cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
 
+      - run: pwd
+      - run: ls -alt ./build/libs
+      
       - store_artifacts:
-          run: pwd
-          run: ls -alt ./build/libs
           path: ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
           destination: artifact-file
       
