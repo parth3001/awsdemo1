@@ -72,6 +72,10 @@ jobs:
                sudo pip install -q awscli --upgrade
                aws --version
                cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
+               
+      - run: 
+          name: Upload to s3
+          command: aws s3 cp ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip s3://phawsdemo/
 
       - run: pwd
       - run: ls -alt ./build/libs
