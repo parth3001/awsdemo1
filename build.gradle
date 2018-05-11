@@ -35,9 +35,7 @@ repositories {
 }
 
 war {
-from('appspec.yml') {
-		into('')
-		    }
+from('appspec.yml') {into('')}
 }
 
 dependencies {
