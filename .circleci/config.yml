@@ -72,7 +72,7 @@ jobs:
                curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
                sudo pip install -q awscli --upgrade
                aws --version
-               cp ./build/libs/repo-0.0.1-SNAPSHOT.war ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
+               cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
                
       - run: 
           name: Run Veracode Scan   
@@ -94,13 +94,13 @@ jobs:
                
       - run: 
           name: Upload to s3
-          command: aws s3 cp ./build/libs/repo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip s3://phawsdemo/
+          command: aws s3 cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip s3://phawsdemo/
 
       - run: pwd
       - run: ls -alt ./build/libs
       
       - store_artifacts:
-          path: ./build/libs/repo-0.0.1-SNAPSHOT.war
+          path: ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war
           destination: artifact-file
       
       #- run: which aws
