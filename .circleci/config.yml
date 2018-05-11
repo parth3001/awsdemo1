@@ -82,6 +82,8 @@ jobs:
                chmod 777 veracode
                mv vosp-api-wrappers-java-17.11.4.9.jar VeracodeJavaAPI.jar
                chmod 777 VeracodeJavaAPI.jar
+               pwd
+               ls -ltr
                cd repo
                pwd
                ls -ltr
