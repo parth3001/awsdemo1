@@ -34,7 +34,7 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-war {
+task mywar(type: War) {
 from('appspec.yml') {into('')}
 }
 
