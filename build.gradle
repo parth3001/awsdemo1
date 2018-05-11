@@ -34,6 +34,12 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
+bootJar {
+from('appspec.yml') {
+		into('')
+		    }
+     basename = 'enterprise-service'
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter')
