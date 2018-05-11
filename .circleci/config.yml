@@ -56,7 +56,7 @@ jobs:
       - run: 
           name: Gradle Tests and Build
           command: |
-               gradle clean bootJar
+               gradle clean 
                gradle build
                ls -alt
                ls -alt ./build/libs
