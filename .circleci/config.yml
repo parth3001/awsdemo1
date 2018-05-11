@@ -76,7 +76,7 @@ jobs:
       - run: 
           name: Run Veracode Scan   
           command: |
-               cd ~
+               cd ~/repo
                wget "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/17.11.4.9/vosp-api-wrappers-java-17.11.4.9.jar"
                mkdir veracode
                chmod 777 veracode
@@ -84,7 +84,7 @@ jobs:
                chmod 777 VeracodeJavaAPI.jar
                pwd
                ls -ltr
-               cd repo
+               #cd repo
                pwd
                ls -ltr
                chmod 777 veracode.sh
