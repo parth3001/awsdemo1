@@ -37,7 +37,7 @@ jobs:
           - v1-dependencies-
       
       #- run: gradle sonarqube dependencies
-      - run: gradle clean build bootJar sonar -Dsonar.organization=tvaradan-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=51b309151ad5adc9001b7ae589063198470aee97      
+      - run: gradle clean build sonar -Dsonar.organization=tvaradan-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=51b309151ad5adc9001b7ae589063198470aee97      
       - run: ls -alt
  # Lambda Updates
       - run:
@@ -56,7 +56,7 @@ jobs:
       - run: 
           name: Gradle Tests and Build
           command: |
-               gradle clean
+               gradle clean bootJar
                gradle build
                ls -alt
                ls -alt ./build/libs
