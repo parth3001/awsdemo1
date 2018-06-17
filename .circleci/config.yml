@@ -162,4 +162,4 @@ jobs:
       #- run:
       #    name: Deployment Status
       #    command: |
-      #      aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default
+      #      aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default 
