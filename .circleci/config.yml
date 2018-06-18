@@ -208,23 +208,7 @@ jobs:
       TERM: dumb
      
     steps:
-      -run: 
-          name: Run Veracode Scan   
-          command: |
-            cd ~/repo
-            wget "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/17.11.4.9/vosp-api-wrappers-java-17.11.4.9.jar"
-            mkdir veracode
-            chmod 777 veracode
-            mv vosp-api-wrappers-java-17.11.4.9.jar VeracodeJavaAPI.jar
-            chmod 777 VeracodeJavaAPI.jar
-            pwd
-            ls -ltr
-            #cd repo
-            pwd
-            ls -ltr
-            chmod 777 veracode.sh
-            #./veracode.sh "9253b48d39d3726d1c13f3f52230839f" "ef2978b283fb3217b1ba5531410c723541aa8b503525f8ec901556729d52033e278d8e1a38cbf2b82bc3d3838de95489701337c729070d1cc23481d689bde229" "BookIT" "/home/circleci/repo/build/libs/AWS-Demo-0.0.1-SNAPSHOT.war" "AWSDEMO_May11_3"
-            #no_output_timeout: 1h     
+      - run: ls -alt
 
   uploadtoS3:
     docker:
@@ -247,23 +231,7 @@ jobs:
       TERM: dumb
      
     steps:
-      -run: 
-          name: Run Veracode Scan   
-          command: |
-            cd ~/repo
-            wget "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/17.11.4.9/vosp-api-wrappers-java-17.11.4.9.jar"
-            mkdir veracode
-            chmod 777 veracode
-            mv vosp-api-wrappers-java-17.11.4.9.jar VeracodeJavaAPI.jar
-            chmod 777 VeracodeJavaAPI.jar
-            pwd
-            ls -ltr
-            #cd repo
-            pwd
-            ls -ltr
-            chmod 777 veracode.sh
-            #./veracode.sh "9253b48d39d3726d1c13f3f52230839f" "ef2978b283fb3217b1ba5531410c723541aa8b503525f8ec901556729d52033e278d8e1a38cbf2b82bc3d3838de95489701337c729070d1cc23481d689bde229" "BookIT" "/home/circleci/repo/build/libs/AWS-Demo-0.0.1-SNAPSHOT.war" "AWSDEMO_May11_3"
-            #no_output_timeout: 1h  
+      - run: ls -alt
      
 
 workflows:
