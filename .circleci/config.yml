@@ -37,7 +37,7 @@ jobs:
           - v1-dependencies-
       
       #- run: gradle sonarqube dependencies
-      - run: gradle clean build mywar sonar -Dsonar.organization=tvaradan-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=85d6e60ccb7045ed5dc3b41a964bd9e734388dfc      
+      - run: gradle clean build mywar sonar -Dsonar.organization=tvaradan-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=58a333389bb268e31d1201c78c236bfd15e0a563      
       - run: ls -alt
  # Lambda Updates
       - run:
