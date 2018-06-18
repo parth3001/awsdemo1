@@ -247,7 +247,6 @@ jobs:
       TERM: dumb
      
     steps:
-      - run: ls -alt
      
 
 workflows:
