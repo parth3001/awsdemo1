@@ -164,7 +164,7 @@ jobs:
       #    command: |
       #      aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default 
 
-  test:
+  acceptancetest:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
@@ -186,6 +186,45 @@ jobs:
      
     steps:
       - run: ls -alt
+
+  securitytest:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+      # - image: arn:aws:ecr:us-east-1:916853075824:repository/java/oracle/serverjre 
+      #- image: 916853075824.dkr.ecr.us-east-1.amazonaws.com/java/oracle/serverjre
+      #- image: docker-aws-cli
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+     
+    steps:
+      -run: 
+          name: Run Veracode Scan   
+          command: |
+            cd ~/repo
+            wget "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/17.11.4.9/vosp-api-wrappers-java-17.11.4.9.jar"
+            mkdir veracode
+            chmod 777 veracode
+            mv vosp-api-wrappers-java-17.11.4.9.jar VeracodeJavaAPI.jar
+            chmod 777 VeracodeJavaAPI.jar
+            pwd
+            ls -ltr
+            #cd repo
+            pwd
+            ls -ltr
+            chmod 777 veracode.sh
+            #./veracode.sh "9253b48d39d3726d1c13f3f52230839f" "ef2978b283fb3217b1ba5531410c723541aa8b503525f8ec901556729d52033e278d8e1a38cbf2b82bc3d3838de95489701337c729070d1cc23481d689bde229" "BookIT" "/home/circleci/repo/build/libs/AWS-Demo-0.0.1-SNAPSHOT.war" "AWSDEMO_May11_3"
+            #no_output_timeout: 1h     
 
   uploadtoS3:
     docker:
@@ -213,15 +252,38 @@ jobs:
           command: |
             echo $AWS_ACCESS_KEY_ID_SANDBOX
 
+      -run:      
+          name: Install AWS CLI
+          command: |
+               sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+               curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+               sudo pip install -q awscli --upgrade
+               aws --version
+               cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
+      - run: 
+          name: Upload to s3
+          command: aws s3 cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip s3://phawsdemo/
+
+      - run: pwd
+      - run: ls -alt ./build/libs
       
+      - store_artifacts:
+          path: ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war
+          destination: artifact-file
+
+
 workflows:
   version: 2
   build-test-and-deploy:
     jobs:
       - build
-      - test:
+      - acceptancetest:
           requires:
             - build
+      - securitytest:
+          requires:
+            -build
       - uploadtoS3:
           requires:
-            - test
+            - acceptancetest
+            - securitytest
