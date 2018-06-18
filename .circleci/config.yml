@@ -247,11 +247,7 @@ jobs:
       TERM: dumb
      
     steps:
-      - run:
-          name: Env Variables
-          command: |
-            echo $AWS_ACCESS_KEY_ID_SANDBOX
-
+      - run: ls -alt
      
 
 workflows:
