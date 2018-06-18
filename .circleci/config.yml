@@ -247,7 +247,7 @@ jobs:
       TERM: dumb
      
     steps:
-      - run: ls -alt
+     
 
 workflows:
   version: 2
@@ -259,7 +259,7 @@ workflows:
             - build
       - securitytest:
           requires:
-            -build
+            - build
       - uploadtoS3:
           requires:
             - acceptancetest
