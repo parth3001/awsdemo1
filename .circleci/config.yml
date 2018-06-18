@@ -213,26 +213,7 @@ jobs:
           command: |
             echo $AWS_ACCESS_KEY_ID_SANDBOX
 
-      -run:      
-          name: Install AWS CLI
-          command: |
-               sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
-               curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
-               sudo pip install -q awscli --upgrade
-               aws --version
-               cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
-      - run: 
-          name: Upload to s3
-          command: aws s3 cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip s3://phawsdemo/
-
-      - run: pwd
-      - run: ls -alt ./build/libs
       
-      - store_artifacts:
-          path: ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war
-          destination: artifact-file
-
-
 workflows:
   version: 2
   build-test-and-deploy:
