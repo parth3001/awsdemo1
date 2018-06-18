@@ -187,6 +187,51 @@ jobs:
     steps:
       - run: ls -alt
 
+  uploadtoS3:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+      # - image: arn:aws:ecr:us-east-1:916853075824:repository/java/oracle/serverjre 
+      #- image: 916853075824.dkr.ecr.us-east-1.amazonaws.com/java/oracle/serverjre
+      #- image: docker-aws-cli
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+     
+    steps:
+      - run:
+          name: Env Variables
+          command: |
+            echo $AWS_ACCESS_KEY_ID_SANDBOX
+
+      -run:      
+          name: Install AWS CLI
+          command: |
+               sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+               curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+               sudo pip install -q awscli --upgrade
+               aws --version
+               cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip
+      - run: 
+          name: Upload to s3
+          command: aws s3 cp ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war_$CIRCLE_BUILD_NUM.zip s3://phawsdemo/
+
+      - run: pwd
+      - run: ls -alt ./build/libs
+      
+      - store_artifacts:
+          path: ./build/libs/AWS-Demo-0.0.1-SNAPSHOT.war
+          destination: artifact-file
+
 
 workflows:
   version: 2
@@ -196,3 +241,6 @@ workflows:
       - test:
           requires:
             - build
+      - uploadtoS3:
+          requires:
+            - test
