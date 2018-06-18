@@ -164,3 +164,35 @@ jobs:
       #    command: |
       #      aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default 
 
+  test:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+      # - image: arn:aws:ecr:us-east-1:916853075824:repository/java/oracle/serverjre 
+      #- image: 916853075824.dkr.ecr.us-east-1.amazonaws.com/java/oracle/serverjre
+      #- image: docker-aws-cli
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+      working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+     
+    steps:
+      - run: ls -alt
+
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
