@@ -164,7 +164,7 @@ jobs:
       #    command: |
       #      aws deploy wait deployment-successful --deployment-id $(cat newdeploy.json) --region us-east-1 --profile default 
 
-  test1:
+  test:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
@@ -187,6 +187,4 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
-          requires:
-            - test
+   
